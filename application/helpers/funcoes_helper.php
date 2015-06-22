@@ -38,15 +38,16 @@
     function init_painel(){
         
         $CI =& get_instance();
-        $CI->load->library(array('sistema', 'parser', 'session', 'form_validation'));
+        $CI->load->library(array('sistema', 'session', 'form_validation'));
         $CI->load->helper(array('form','url', 'array', 'text'));
         
         //carregamento dos models
+        $CI->load->model('usuarios_model', 'usuarios');
         
         set_tema('titulo_padrao', 'Painel ADM');
         set_tema('rodape', '<p>&copy; 2015 | Todos os direitos reservados');
         set_tema('template', 'painel_view');
-        set_tema('headerinc', load_css(array('bootstrap.min', 'bootstrap')), FALSE);
+        set_tema('headerinc', load_css(array('bootstrap.min', 'style')), FALSE);
         set_tema('footerinc', load_js(array('bootstrap.min')));
     }
     
@@ -102,4 +103,10 @@
             endif;
         endif;
         return $retorno;
+    }
+    
+// mostra erros de validação em fomrs
+    function erros_validacao(){
+        if(validation_errors())
+        echo '<div class="alert alert-warning">'.validation_errors('<p>', '</p>').'</div>';
     }
